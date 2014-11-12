@@ -1,0 +1,353 @@
+<?php
+// Load translation data
+$this->i18nTheme('default');
+
+//HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
+$this->js(array(
+    pi::url('static/js/html5shiv.js') => array(
+        'conditional' => 'lt IE 9'
+    ),
+    pi::url('static/js/respond.min.js') => array(
+        'conditional' => 'lt IE 9'
+    ),
+));
+
+// Load jQuery
+$this->jquery();
+
+// Load Bootstrap css/js and font-awesome
+$this->bootstrap(array(
+    'js/bootstrap.min.js',
+    'font-awesome/css/font-awesome.min.css' => array('media' => "all")
+));
+
+// Load front.css
+$this->css($this->assetTheme('css/front.css'), array('media' => "all"));
+
+// Load localization css
+$this->css($this->assetLocale('locale.css'), array('media' => "all"));
+
+// Apple icons
+// Apple icon for iphone
+$this->headLink(array(
+    'rel' => 'apple-touch-icon',
+    'href' => $this->assetTheme('image/touch-icon-iphone.png')
+));
+// Apple icon for ipad
+$this->headLink(array(
+    'rel' => 'apple-touch-icon',
+    'sizes' => '72x72',
+    'href' => $this->assetTheme('image/touch-icon-ipad.png')
+));
+// Apple icon for iphone retina
+$this->headLink(array(
+    'rel' => 'apple-touch-icon',
+    'sizes' => '114x114',
+    'href' => $this->assetTheme('image/touch-icon-iphone-retina.png')
+));
+// Apple icon for ipad retina
+$this->headLink(array(
+    'rel' => 'apple-touch-icon',
+    'sizes' => '114x114',
+    'href' => $this->assetTheme('image/touch-icon-ipad-retina.png')
+));
+
+// Meta http-equiv
+//$this->headMeta('IE=edge', 'X-UA-Compatible', 'http-equiv', array('conditional' => 'IE'));
+
+// Meta Viewport Tag
+$this->headMeta('width=device-width, initial-scale=1.0', 'viewport');
+
+// Dublin Core relation
+/* $this->headLink(array(
+    'rel' => 'DC.relation',
+    'href' => Pi::url('www')),
+    'PREPEND');
+
+// Dublin Core language relation
+$this->headLink(array(
+    'rel' => 'DC.relation',
+    'hreflang' => $locale,
+    'href' => Pi::url('www')),
+    'PREPEND'); */
+
+// Explicitly load favicon
+$this->headLink(array(
+    'rel' => 'shortcut icon',
+    'href' => $this->favicon(),
+));
+
+// Load google analytics code
+$this->ga();
+
+// current module
+$module = Pi::service('module')->current();
+
+// Load nav
+$navigation = $this->nav('front');
+
+// Load blocks
+$blocks = $this->blocks();
+$blockTemplate = $this->template('block');
+
+// breadcrumbs
+$breadcrumbs = $this->breadcrumb(array('prefix' => array(array('label' => 'صفحه اول', 'href' => $this->url('home')))));
+
+?>
+<!DOCTYPE HTML>
+<html lang="<?php echo $locale; ?>">
+<head>
+<meta charset="<?php echo $charset; ?>">
+<?php echo $this->assemble('headTitle'); ?>
+<?php echo $this->assemble('headMeta'); ?>
+<meta property="dc:title" lang="<?php echo $locale; ?>" content="<?php echo $this->escape($sitename); ?>">
+<meta property="dc:publisher" content="<?php echo $this->escape($sitename); ?>">
+<meta property="dc:subject" lang="<?php echo $locale; ?>" content="<?php echo $this->escape($slogan); ?>">
+<meta property="dc:description" lang="<?php echo $locale; ?>" content="">
+<meta property="dc:type" content="Text">
+<meta property="dc:language" content="<?php echo $locale; ?>">
+<meta name="p:domain_verify" content="8efa9bfdb48eb7a3307b9395945a147d"/>
+<?php echo $this->assemble('headLink'); ?>
+<?php echo $this->assemble('headStyle'); ?>
+<?php echo $this->assemble('headScript'); ?>
+</head>
+<body id="pi-<?php echo $module; ?>" class="pi-locale-<?php echo $locale; ?>">
+    <header id="pi-header">
+        <nav id="pi-header-menu" class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="navbar-header">
+                            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <h1>
+                                <a class="navbar-brand" title="<?php echo _escape($sitename); ?>" href="<?php echo $this->url('home'); ?>" rel="home">
+                                    <i class="fa fa-coffee"></i>
+                                    <?php echo _escape($sitename); ?>
+                                </a>
+                            </h1>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <?php echo $navigation->menu()->setUlClass('nav navbar-nav pi-navbar-nav'); ?>
+                            <div id="pi-header-user-bar" class="pull-left">
+                                <?php echo $this->widget('system-user-bar'); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section id="pi-section">
+    	<!-- Top head zone -->
+        <?php if (!empty($blocks['0'])) { ?>
+        <div class="pi-zone-0">
+            <?php foreach ($blocks['0'] as $block) {
+                include $blockTemplate;
+            } ?>
+        </div>
+        <?php } ?>
+        <div class="container">
+            <!--[if lt IE 9]>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">
+                        <h4>خطا در نمایش وب سایت</h4>
+                        <p>مرورگر اینترنت شما قدیمی است و از تکنولوژی های جدید وب پشتیبانی نمی کند. برای استفاده از این وب سایت مرورگر خود را به روز کنید.</p>
+                        <p>شما میتوانید از مرورگر های <a href="https://www.mozilla.org/en-US/firefox/new/" >فایرفاکس</a> یا <a href="https://www.google.com/chrome">گوگل کروم</a> استفاده نمایید.</p>
+                    </div>
+                </div>
+            </div>
+            <![endif]-->
+            <!-- Flash messenger -->
+            <?php include $this->template('flash-messenger'); ?>
+            <div id="pi-section-main" class="row">
+                <!-- Left zone -->
+                <?php if (!empty($blocks['1'])) { ?>
+                <div class="pi-zone-1 col-md-3">
+                    <?php foreach ($blocks['1'] as $block) {
+                        include $blockTemplate;
+                    } ?>
+                </div>
+                <?php } ?>
+                <div class="<?php
+                    if (isset($blocks['1']) && isset($blocks['8'])) {
+                        echo 'col-md-6';
+                    } elseif (isset($blocks['1']) || isset($blocks['8'])) {
+                        echo 'col-md-9';
+                    } else {
+                        echo 'col-md-12';
+                    }
+                    ?>">
+                    <?php if ($breadcrumbs) { echo $breadcrumbs; } ?>
+                    <!-- Center top zone -->
+                    <?php if (isset($blocks['2'])) { ?>
+                    <div class="pi-zone-2">
+                        <?php foreach ($blocks['2'] as $block) {
+                            include $blockTemplate;
+                        } ?>
+                    </div>
+                    <?php } ?>
+                    <?php if (isset($blocks['3']) || isset($blocks['4'])) { ?>
+                    <div class="row">
+                        <div class="col-md-9 pi-zone-3">
+                            <?php
+                            if (isset($blocks['3'])) { 
+                                foreach ($blocks['3'] as $block) {
+                                    include $blockTemplate;
+                                }
+                           } 
+                            ?>
+                        </div>
+                        <div class="col-md-3 pi-zone-4">
+                            <?php
+                            if (isset($blocks['4'])) { 
+                                foreach ($blocks['4'] as $block) {
+                                    include $blockTemplate;
+                                }
+                            } 
+                            ?>
+                        </div>
+                    </div>
+                    <?php } ?>
+
+                    <!-- Module content starts -->
+                    <?php if (!empty($content)) { ?>
+                    <div id="pi-section-content" class="clearfix">
+                        <div class="pi-module-content clearfix">
+                            <?php echo $content; ?>
+                        </div>
+                    </div>
+                    <?php echo Pi::service('comment')->load(array('options' => array('type' => 'js'))); ?>
+                    <?php } ?>
+                    <!-- Module content ends -->
+
+                    <?php if (isset($blocks['5']) || isset($blocks['6']) || isset($blocks['7'])) { ?>
+                    <div class="row">
+                        <div class="col-md-4 pi-zone-5">
+                            <?php
+                            if (isset($blocks['5'])) { 
+                                foreach ($blocks['5'] as $block) {
+                                    include $blockTemplate;
+                                }
+                            } 
+                            ?>
+                        </div>
+                        <div class="col-md-4 pi-zone-7">
+                            <?php
+                            if (isset($blocks['7'])) { 
+                                foreach ($blocks['7'] as $block) {
+                                    include $blockTemplate;
+                                }
+                            } 
+                            ?>
+                        </div>
+                        <div class="col-md-4 pi-zone-6">
+                            <?php
+                            if (isset($blocks['6'])) { 
+                                foreach ($blocks['6'] as $block) {
+                                    include $blockTemplate;
+                                }
+                            } 
+                            ?>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+                <!-- Right zone -->
+                <?php if (isset($blocks['8'])) { ?>
+                <div class="col-md-3 pi-zone-8">
+                    <?php foreach ($blocks['8'] as $block) {
+                        include $blockTemplate;
+                    } ?>
+                </div>
+                <?php } ?>
+            </div>
+            <!-- Bottom foot zone -->
+            <?php if (isset($blocks['99'])) { ?>
+            <div class="pi-zone-99">
+                <?php foreach ($blocks['99'] as $block) {
+                    include $blockTemplate;
+                } ?>
+            </div>
+            <?php } ?>
+        </div>
+    </section>
+    <footer id="pi-footer">
+        <div id="pi-footer-body">
+            <div id="pi-footer-bar-1">
+                <div class="container">
+                    <div id="pi-footer-info" class="row clearfix">
+                        <div class="col-md-12">
+                            وب سایت کافه یاب ، به عنوان مرجع معرفی و اطلاع رسانی کافه های ایران در تابستان ۱۳۹۳ فعالیت رسمی خود را آغاز نمود. این <h2>وب سایت</h2> در نظر دارد با معرفی <h2>کافه</h2> ها ، <h2>کافی شاپ</h2> ها ، <h2>شیرینی فروشی</h2> ها و <h2>قهوه فروشی</h2> های موجود در سطح کشور ، امکان <h2>آشنایی</h2> کاربران را با این مکان ها و استفاده از <h2>خدمات</h2> آنها فراهم کند . از طرف دیگر امکان درج و به روز رسانی اطلاعات کافه ها توسط صاحبان آنها به صورت <h2>رایگان</h2> در وب سایت وجود دارد.
+                        </div>
+                        <div class="col-md-12">
+                            <div id="pi-social">
+                                <ul class="list-inline text-left">
+                                    <li id="pi-social-twitter"><a title="تویتر" href="https://twitter.com/cafeyab"><i class="fa fa-twitter-square"></i></a></li>
+                                    <li id="pi-social-facebook"><a title="فیسبوک" href="https://www.facebook.com/cafeyabcom"><i class="fa fa-facebook-square"></i></a></li>
+                                    <li id="pi-social-pinterest"><a title="پین‌ترست" href="https://www.pinterest.com/cafeyab"><i class="fa fa-pinterest-square"></i></a></li>
+                                    <li id="pi-social-google"><a title="گوگل پلاس" href="https://plus.google.com/109516217966042555450"><i class="fa fa-google-plus-square"></i></a></li>
+                                    <li id="pi-social-instagram"><a title="اینستاگرام" href="https://www.instagram.com/cafeyabcom"><i class="fa fa-instagram"></i></a></li>
+                                    <li id="pi-social-rss-news"><a title="خوراک اخبار و مقالات" href="https://www.cafeyab.com/feed/news"><i class="fa fa-rss-square"></i></a></li>
+                                    <li id="pi-social-rss-guide"><a title="خوراک کافه ها" href="https://www.cafeyab.com/feed/guide"><i class="fa fa-rss-square"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="pi-footer-bar-2">
+                <div class="container">
+                    <div id="pi-footer-box" class="row clearfix">
+                        <div class="col-md-2">
+                            <ul>
+                                <li><a title="کافه ها" href="https://www.cafeyab.com/guide/category/cafe"><i class="fa fa-angle-left"></i> کافه ها</a></li>
+                                <li><a title="کافی شاپ ها" href="https://www.cafeyab.com/guide/category/coffee-shop"><i class="fa fa-angle-left"></i> کافی شاپ ها</a></li>
+                                <li><a title="فروشگاه ها" href="https://www.cafeyab.com/guide/category/shop"><i class="fa fa-angle-left"></i> فروشگاه ها</a></li>
+                                <li><a title="شیرینی فروشی ها" href="https://www.cafeyab.com/guide/category/pastry"><i class="fa fa-angle-left"></i> شیرینی فروشی ها</a></li>
+                                <li><a title="غذای خانگی" href="https://www.cafeyab.com/guide/category/household-food"><i class="fa fa-angle-left"></i> غذای خانگی</a></li>
+                                <li><a title="نقشه مکان کافه ها" href="https://www.cafeyab.com/guide/map"><i class="fa fa-angle-left"></i> نقشه مکان کافه ها</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-2">
+                            <ul>
+                                <li><a title="تاریخچه" href="https://www.cafeyab.com/news/topic/history"><i class="fa fa-angle-left"></i> تاریخچه</a></li>
+                                <li><a title="اخبار" href="https://www.cafeyab.com/news/topic/news"><i class="fa fa-angle-left"></i> اخبار</a></li>
+                                <li><a title="آموزش" href="https://www.cafeyab.com/news/topic/instruction"><i class="fa fa-angle-left"></i> آموزش</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-2">
+                            <ul>
+                                <li><a title="درباره ما" href="https://www.cafeyab.com/page/about-us"><i class="fa fa-angle-left"></i> درباره ما</a></li>
+                                <li><a title="تماس با ما" href="https://www.cafeyab.com/contact"><i class="fa fa-angle-left"></i> تماس با ما</a></li>
+                                <li><a title="راهنمای ثبت کافه" href="https://www.cafeyab.com/page/registration-guide"><i class="fa fa-angle-left"></i> راهنمای ثبت کافه</a></li>
+                                <li><a title="راهنمای کاربران" href="https://www.cafeyab.com/page/user-guide/"><i class="fa fa-angle-left"></i> راهنمای کاربران</a></li>
+                                <li><a title="قوانین و مقررات" href="https://www.cafeyab.com/page/rules"><i class="fa fa-angle-left"></i> قوانین و مقررات</a></li>
+                                <li><a title="جستجوی پیشرفته" href="https://www.cafeyab.com/guide/search"><i class="fa fa-angle-left"></i> جستجوی پیشرفته</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div id="pi-footer-bar-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="pi-footer-copyright">
+                                <div class="text-right" rel="license">
+                                    <p>تمام حقوق مطالب برای وب سایت <a title="کافه یاب" href="https://www.cafeyab.com">کافه یاب</a> محفوظ است.</p>
+                                    <p>طراحی و توسعه <a title="فراگسترش" href="http://www.faragostaresh.com">فراگسترش</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <?php echo $this->assemble('footScript', 4); ?>
+</body>
+</html>

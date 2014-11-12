@@ -1,38 +1,45 @@
-Cafeyab Theme
-=============
+<table>
+    <thead>
+        <tr>
+            <td colspan="4">{0}</td>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <td colspan="4">{99}</td>
+        </tr>
+    </tfoot>
+    <tbody>
+        <tr>
+            <td>{1}</td>
+            <td>
+                <table>
+                    <tr>
+                        <td colspan="3">{2}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{3}</td>
+                        <td>{4}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">{content}</td>
+                    </tr>
+                    <tr>
+                        <td>{5}</td>
+                        <td>{7}</td>
+                        <td>{6}</td>
+                    </tr>
+                </table>
+            </td>
+            <td>{8}</td>
+        </tr>
+    </tbody>
+</table>
 
-Pi Engine theme for cafeyab.com
-
-
-
-
-**Folder and file skeleton**
-
-* Templates REQUIRED for front:
-  *  template/layout-front.phtml - complete layout template: header, footer, body, blocks, navigation
-  *  template/layout-simple.phtml - error page layout: header, footer, body
-  *  template/layout-style.phtml - content with stylesheets
-  *  template/layout-content.phtml - raw content without stylesheets
-  *  template/error.phtml - defined in var/config/config.application.php: view_manager.error_template
-* Templates OPTIONAL for front:
-  *  template/page-zone.phtml - for block manipulation on a page
-  *  template/block.phtml - called by layout-front.phtml
-  *  template/error-404.phtml - defined in var/config/config.application.php: view_manager.not_found_template
-  *  template/error-denied.phtml - defined in var/config/config.application.php: view_manager.denied_template
-  *  template/error-exception.phtml - defined in var/config/config.application.php: view_manager.exception_template
-* Stylesheet file REQUIRED:
-*  asset/css/style.css - main css file
-
-**Best practices**
-*  It is highly recommended to use 'pi-' as prefix for all global id and class names used in theme to avoid conflicts.
-*  It is highly recommended to use module identity as prefix for module id and class names used in templates to avoid conflicts, for instance 'demo-'.
-
-
-
-**Block zones**
-
-```
- |<- lt ->|<------------------        center        ------------------>|<- rt ->|
+<!--
+/* Block zones */
+/*
+ |<- lt ->|<- ----------------        center        ---------------- ->|<- rt ->|
 
 
  --------------------------------------------------------------------------------
@@ -65,26 +72,6 @@ Pi Engine theme for cafeyab.com
  |                                                                              |
  --------------------------------------------------------------------------------
 
- |<- lt ->|<------------------        center        ------------------>|<- rt ->|
-```
-
-### front.css
-```
-1. Bootstrap custom css or [custom bootstrap.css](http://getbootstrap.com/customize/) in theme
-1. Block
-   * head
-     * pi-panel-subline
-     * tab
-   * body
-1. ellipsis
-   * .pi-ellipsis
-   * .pi-ellipsis-1
-   * .pi-ellipsis-2
-   * .pi-ellipsis-3
-   * .pi-ellipsis-4
-1. pi-list
-1. pi-order-list
-1. pi-footer
-1. module-custom
-
-```
+ |<- lt ->|<- ----------------        center        ---------------- ->|<- rt ->|
+ */
+//-->

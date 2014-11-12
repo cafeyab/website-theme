@@ -1,0 +1,134 @@
+<?php
+//For ajax request login
+if ('js' == $block['type']) { 
+?>
+<ul class="nav navbar-nav navbar-right" id="user-bar-anonymous" style="display: none;">
+    <li>
+        <a href="<?php echo $block['user']['login']; ?>">
+            <?php echo _b('Login'); ?>
+        </a>
+    </li>    
+    <li>
+        <a href="<?php echo $block['user']['register']; ?>">
+            <?php echo _b('Register'); ?>
+        </a>
+    </li>     
+</ul>
+<ul class="nav navbar-nav navbar-right" id="user-bar-member" style="display: none;">
+    <li>
+        <a id="member-profile" href="#" title="<?php echo _b('Profile'); ?>">
+            <?php echo _b('Profile'); ?>
+        </a>
+    </li> 
+    <li>
+         <a id="member-message" href="#" title="<?php echo _b('Message'); ?>">
+            <?php echo _b('Message'); ?>
+        </a>
+    </li>
+    <li>
+        <a id="member-logout" href="<?php echo $block['user']['logout']; ?>">
+            <?php echo _b('Logout'); ?>
+        </a>
+    </li>
+</ul>
+<script>
+    $.getJSON("<?php echo $block['callback']; ?>?" + new Date().getTime(), function (user) {
+        var ela = $('#user-bar-anonymous');
+        var elm = $('#user-bar-member');
+
+        if (user.uid > 0) {
+            ela.hide();
+            elm.show();
+            $('#member-message').attr('href', user.message);
+            $('#member-profile').attr('href', user.profile).html(user.avatar + ' ' + user.name);
+        } else {
+            ela.show();
+            elm.hide();
+        }
+    });
+</script>
+<?php
+return;
+}
+?>
+<ul class="nav navbar-nav navbar-right">
+<?php if ('dropdown' == $block['type']) { ?>
+    <!-- Dropdown display mode: logged in - user avatar, dropdown menu with user name with link to user profile, link to logout; guest - link to login, link to register  -->
+    <?php
+    if (!$block['user']['uid']) { ?>
+    <li>
+        <a href="<?php echo $block['user']['login']; ?>">
+            <?php echo _b('Login'); ?>
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo $block['user']['register']; ?>">
+            <?php echo _b('Register'); ?>
+        </a>
+    </li>
+    <?php
+    } else {
+        ?>
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="icon-user"></i>
+            <?php echo _escape($block['user']['name']); ?>
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="<?php echo $block['user']['profile']; ?>" title="<?php echo _b('Profile'); ?>"><?php echo _b('Profile'); ?></a></li>
+            <li><a href="<?php echo $block['user']['message']; ?>" title="<?php echo _b('Message'); ?>"><?php echo _b('Message'); ?></a></li>
+            <li><a href="<?php echo $block['user']['logout']; ?>" title="<?php echo _b('Logout'); ?>"><?php echo _b('Logout'); ?></a></li>
+        </ul>
+    <?php
+    }
+    ?>
+<?php } else { ?>
+    <!-- Flat display mode: logged in - user avatar, user name with link to user profile, link to logout; guest - link to login, link to register  -->
+    <?php
+        if (!$block['user']['uid']) { ?>
+        <li>
+            <a title="<?php echo _b('Login'); ?>" href="<?php echo $block['user']['login']; ?>">
+                <i class="fa fa-sign-in"></i>
+                <?php echo _b('Login'); ?>
+            </a>
+        </li>
+        <li>
+            <a title="<?php echo _b('Register'); ?>" href="<?php echo $block['user']['register']; ?>">
+                <i class="fa fa-arrow-circle-down"></i>
+                <?php echo _b('Register'); ?>
+            </a>
+        </li>
+    <?php
+        } else {
+    ?>
+        <li class="dropdown">
+            <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                <?php echo $block['user']['avatar']; ?>
+                <?php echo _escape($block['user']['name']); ?>
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                <li><a title="تنظیمات حساب کاربری" href="https://www.cafeyab.com/user/account/">تنظیمات حساب کاربری</a></li>
+                <li><a title="تغییر کلمه عبور" href="https://www.cafeyab.com/user/password/">تغییر کلمه عبور</a></li>
+                <li><a title="تغییر آواتار" href="https://www.cafeyab.com/user/avatar/">تغییر آواتار</a></li>
+                <li><a title="به روز کردن پروفایل پایه" href="https://www.cafeyab.com/user/profile/edit.profile/group/1">به روز کردن پروفایل پایه</a></li>
+            </ul>
+        </li>
+        <li>
+            <a title="فهرست علاقه مندی ها" href="https://www.cafeyab.com/guide/favourite">
+                <i class="fa fa-star"></i>
+                علاقه مندی ها
+            </a>
+        </li>
+        <li>
+            <a title="?php echo _b('Logout'); ?>" href="<?php echo $block['user']['logout']; ?>">
+                <i class="fa fa-power-off"></i> 
+               <?php echo _b('Logout'); ?>
+            </a>
+        </li>
+    <?php
+        }
+    ?>
+<?php } ?>
+</ul>
